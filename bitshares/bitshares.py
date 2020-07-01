@@ -351,7 +351,6 @@ class BitShares(AbstractGrapheneChain):
             "options": {
                 "memo_key": memo,
                 "voting_account": voting_account["id"],
-                "num_witness": 0,
                 "num_committee": 0,
                 "votes": [],
                 "extensions": [],
@@ -609,12 +608,10 @@ class BitShares(AbstractGrapheneChain):
 
         for witness in witnesses:
             witness = Witness(witness, blockchain_instance=self)
-            options["votes"].append(witness["vote_id"])
+            options["votes"].append(
+                [witness["vote_id"], 100 / (len(witnesses) + len(options["votes"]))]
+            )  # FIXME - shit dirty and wrong!
 
-        options["votes"] = list(set(options["votes"]))
-        options["num_witness"] = len(
-            list(filter(lambda x: float(x.split(":")[0]) == 1, options["votes"]))
-        )
         options["voting_account"] = "1.2.5"  # Account("proxy-to-self")["id"]
 
         op = operations.Account_update(
@@ -650,12 +647,9 @@ class BitShares(AbstractGrapheneChain):
         for witness in witnesses:
             witness = Witness(witness, blockchain_instance=self)
             if witness["vote_id"] in options["votes"]:
+                # FIXME
                 options["votes"].remove(witness["vote_id"])
 
-        options["votes"] = list(set(options["votes"]))
-        options["num_witness"] = len(
-            list(filter(lambda x: float(x.split(":")[0]) == 1, options["votes"]))
-        )
         options["voting_account"] = "1.2.5"  # Account("proxy-to-self")["id"]
 
         op = operations.Account_update(
