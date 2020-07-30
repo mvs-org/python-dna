@@ -687,6 +687,11 @@ class Witness_update(GrapheneObject):
             else:
                 new_signing_key = Optional(None)
 
+            if "block_producer_reward_pct" in kwargs and kwargs["block_producer_reward_pct"]:
+                block_producer_reward_pct = Optional(Uint32(kwargs["block_producer_reward_pct"]))
+            else:
+                block_producer_reward_pct = Optional(None)
+
             super().__init__(
                 OrderedDict(
                     [
@@ -698,6 +703,7 @@ class Witness_update(GrapheneObject):
                         ),
                         ("new_url", new_url),
                         ("new_signing_key", new_signing_key),
+                        ("block_producer_reward_pct", block_producer_reward_pct)
                     ]
                 )
             )
