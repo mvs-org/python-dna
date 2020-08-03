@@ -30,6 +30,7 @@ from graphenebase.types import (
 from .account import PublicKey
 from .objects import (
     AccountCreateExtensions,
+    VestingPolicyInitializer,
     AccountOptions,
     Asset,
     AssetOptions,
@@ -1212,6 +1213,24 @@ class Liquidity_pool_exchange(GrapheneObject):
                         ("amount_to_sell", Asset(kwargs["amount_to_sell"])),
                         ("min_to_receive", Asset(kwargs["min_to_receive"])),
                         ("extensions", Set([])),
+                    ]
+                )
+            )
+
+
+class Vesting_balance_create(GrapheneObject):
+    def __init__(self, *args, **kwargs):
+        if isArgsThisClass(self, args):
+            self.data = args[0].data
+        else:
+            super().__init__(
+                OrderedDict(
+                    [
+                        ("fee", Asset(kwargs["fee"])),
+                        ("creator", ObjectId(kwargs["creator"], "account")),
+                        ("owner", ObjectId(kwargs["owner"], "account")),
+                        ("amount", Asset(kwargs["amount"])),
+                        ("policy", VestingPolicyInitializer(kwargs["policy"])),
                     ]
                 )
             )
