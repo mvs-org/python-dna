@@ -30,4 +30,14 @@ known_chains = {
         "core_symbol": "DNA",
         "prefix": "DNA",
     },
+    "gemini": {
+        "chain_id": "24938a99198d850bb7d79010c1325fb63fde63e8e477a5443ff5ce50ab867055",
+        "core_symbol": "DNA",
+        "prefix": "DNA",
+    },
+    "dna-testnet": {
+        "chain_id": "19969b8cd3c7f00520722c08f97cebe80bb4443098e76726119c767d59354333",
+        "core_symbol": "DNA",
+        "prefix": "DNA",
+    },
 }
